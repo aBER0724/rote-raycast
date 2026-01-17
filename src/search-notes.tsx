@@ -161,7 +161,9 @@ export default function SearchNotes() {
   const [searchText, setSearchText] = useState("");
   const [isShowingDetail, setIsShowingDetail] = useState(true);
   const preferences = getPreferenceValues<Preferences>();
-  const webUrl = (preferences.webUrl as unknown as string | undefined)?.replace(/\/$/, "") || "";
+  const webUrl =
+    (preferences.webUrl as unknown as string | undefined)?.replace(/\/$/, "") ||
+    "";
   const debounceTimer = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {

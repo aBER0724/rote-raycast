@@ -32,7 +32,8 @@ class RoteApiClient {
   constructor() {
     const preferences = getPreferenceValues<Preferences>();
     this.baseUrl =
-      (preferences.apiEndpoint as unknown as string).replace(/\/$/, "").trim() + "/v2/api";
+      (preferences.apiEndpoint as unknown as string).replace(/\/$/, "").trim() +
+      "/v2/api";
     this.username = ((preferences.username as unknown as string) || "").trim();
     this.password = (preferences.password as unknown as string) || "";
   }

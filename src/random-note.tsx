@@ -68,7 +68,9 @@ export default function RandomNote() {
   const [error, setError] = useState<string | null>(null);
   const [isEmpty, setIsEmpty] = useState(false);
   const preferences = getPreferenceValues<Preferences>();
-  const webUrl = (preferences.webUrl as unknown as string | undefined)?.replace(/\/$/, "") || "";
+  const webUrl =
+    (preferences.webUrl as unknown as string | undefined)?.replace(/\/$/, "") ||
+    "";
 
   async function fetchRandomNote() {
     setIsLoading(true);
