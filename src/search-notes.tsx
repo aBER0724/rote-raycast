@@ -6,9 +6,10 @@ import {
   Color,
   getPreferenceValues,
 } from "@raycast/api";
+import type { Preferences } from "@raycast/api";
 import { useState, useEffect, useRef } from "react";
 import { getApiClient } from "./api";
-import { Note, RotePreferences } from "./types";
+import { Note } from "./types";
 
 // Search notes with detail panel
 
@@ -159,8 +160,8 @@ export default function SearchNotes() {
   const [isLoading, setIsLoading] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [isShowingDetail, setIsShowingDetail] = useState(true);
-  const preferences = getPreferenceValues<RotePreferences>();
-  const webUrl = preferences.webUrl?.replace(/\/$/, "") || "";
+  const preferences = getPreferenceValues<Preferences>();
+  const webUrl = (preferences.webUrl as unknown as string | undefined)?.replace(/\/$/, "") || "";
   const debounceTimer = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {

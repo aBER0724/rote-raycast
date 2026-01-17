@@ -10,9 +10,10 @@ import {
   confirmAlert,
   Alert,
 } from "@raycast/api";
+import type { Preferences } from "@raycast/api";
 import { useState, useEffect, useMemo } from "react";
 import { getApiClient } from "./api";
-import { Note, RotePreferences } from "./types";
+import { Note } from "./types";
 import EditNote from "./edit-note";
 
 // List notes with filters and detail panel
@@ -200,8 +201,8 @@ export default function ListNotes() {
   const [isLoading, setIsLoading] = useState(true);
   const [isShowingDetail, setIsShowingDetail] = useState(true);
   const [filter, setFilter] = useState<FilterType>("all");
-  const preferences = getPreferenceValues<RotePreferences>();
-  const webUrl = preferences.webUrl?.replace(/\/$/, "") || "";
+  const preferences = getPreferenceValues<Preferences>();
+  const webUrl = (preferences.webUrl as unknown as string | undefined)?.replace(/\/$/, "") || "";
 
   // Extract unique tags from notes
   const allTags = useMemo(() => {

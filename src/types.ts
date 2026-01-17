@@ -1,13 +1,5 @@
 // Rote API Types - Bearer Token 认证方式
 
-export interface RotePreferences {
-  apiEndpoint: string;
-  webUrl?: string;
-  username: string;
-  password: string;
-  quickAddTag?: string;
-}
-
 // 登录响应
 export interface LoginResponse {
   user: {
