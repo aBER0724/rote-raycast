@@ -5,7 +5,10 @@
   "description": "Quick access to your Rote notes - create, search, and manage your fleeting thoughts",
   "icon": "extension-icon.png",
   "author": "aber_yan",
-  "categories": ["Productivity", "Applications"],
+  "categories": [
+    "Productivity",
+    "Applications"
+  ],
   "license": "MIT",
   "keywords": [
     "rote",
@@ -103,8 +106,7 @@
   ],
   "dependencies": {
     "@raycast/api": "^1.83.0",
-    "@raycast/utils": "^1.17.0",
-    "node-fetch": "^3.3.2"
+    "@raycast/utils": "^1.17.0"
   },
   "devDependencies": {
     "@raycast/eslint-config": "^1.0.11",
