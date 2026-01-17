@@ -31,7 +31,7 @@ export interface RefreshResponse {
 export interface StoredTokens {
   accessToken: string;
   refreshToken: string;
-  expiresAt: number;  // timestamp
+  expiresAt: number; // timestamp
 }
 
 export interface ApiResponse<T> {
@@ -41,7 +41,7 @@ export interface ApiResponse<T> {
 }
 
 export interface Note {
-  id: string;  // 注意：实际API返回的是id，不是_id
+  id: string; // 注意：实际API返回的是id，不是_id
   content: string;
   title?: string;
   tags?: string[];

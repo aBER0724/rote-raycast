@@ -4,7 +4,6 @@ import {
   Form,
   showToast,
   Toast,
-  useNavigation,
   popToRoot,
 } from "@raycast/api";
 import { useState, useEffect } from "react";
@@ -19,7 +18,6 @@ export default function CreateNote() {
   const [newTagInput, setNewTagInput] = useState("");
   const [state, setState] = useState<string>("private");
   const [availableTags, setAvailableTags] = useState<string[]>([]);
-  const { pop } = useNavigation();
 
   // Load available tags from existing notes
   useEffect(() => {
@@ -124,7 +122,12 @@ export default function CreateNote() {
         info="Enter new tags here. They will be combined with selected tags above."
       />
 
-      <Form.Dropdown id="state" title="Visibility" value={state} onChange={setState}>
+      <Form.Dropdown
+        id="state"
+        title="Visibility"
+        value={state}
+        onChange={setState}
+      >
         <Form.Dropdown.Item value="private" title="🔒 Private" />
         <Form.Dropdown.Item value="public" title="🌍 Public" />
       </Form.Dropdown>

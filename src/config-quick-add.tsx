@@ -47,14 +47,14 @@ export default function ConfigQuickAdd() {
   const isNewTag = useMemo(() => {
     const trimmed = searchText.trim();
     if (!trimmed) return false;
-    return !allTags.some(tag => tag.toLowerCase() === trimmed.toLowerCase());
+    return !allTags.some((tag) => tag.toLowerCase() === trimmed.toLowerCase());
   }, [searchText, allTags]);
 
   // Filter tags based on search
   const filteredTags = useMemo(() => {
     if (!searchText.trim()) return allTags;
     const search = searchText.toLowerCase();
-    return allTags.filter(tag => tag.toLowerCase().includes(search));
+    return allTags.filter((tag) => tag.toLowerCase().includes(search));
   }, [allTags, searchText]);
 
   // Load notes and saved config
@@ -87,7 +87,10 @@ export default function ConfigQuickAdd() {
     }
     setSelectedTags(newSelected);
 
-    await LocalStorage.setItem(QUICK_ADD_TAGS_KEY, JSON.stringify(Array.from(newSelected)));
+    await LocalStorage.setItem(
+      QUICK_ADD_TAGS_KEY,
+      JSON.stringify(Array.from(newSelected)),
+    );
 
     await showToast({
       style: Toast.Style.Success,
@@ -104,7 +107,10 @@ export default function ConfigQuickAdd() {
     newSelected.add(trimmed);
     setSelectedTags(newSelected);
 
-    await LocalStorage.setItem(QUICK_ADD_TAGS_KEY, JSON.stringify(Array.from(newSelected)));
+    await LocalStorage.setItem(
+      QUICK_ADD_TAGS_KEY,
+      JSON.stringify(Array.from(newSelected)),
+    );
 
     await showToast({
       style: Toast.Style.Success,
@@ -136,7 +142,10 @@ export default function ConfigQuickAdd() {
     >
       {/* Current selection summary */}
       {selectedTagsArray.length > 0 && (
-        <List.Section title={`已选择的默认标签 (${selectedTagsArray.length})`} subtitle="Quick Add 时会自动添加这些标签">
+        <List.Section
+          title={`已选择的默认标签 (${selectedTagsArray.length})`}
+          subtitle="Quick Add 时会自动添加这些标签"
+        >
           {selectedTagsArray.map((tag) => (
             <List.Item
               key={`selected-${tag}`}

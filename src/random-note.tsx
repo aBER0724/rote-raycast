@@ -30,8 +30,8 @@ function generateMarkdown(note: Note): string {
 
   // Then show attachments/images
   if (note.attachments && note.attachments.length > 0) {
-    const images = note.attachments.filter(
-      (a) => a.details?.mimetype?.startsWith("image/")
+    const images = note.attachments.filter((a) =>
+      a.details?.mimetype?.startsWith("image/"),
     );
     if (images.length > 0) {
       markdown += "\n\n";
@@ -53,7 +53,7 @@ function generateMarkdown(note: Note): string {
   parts.push(`\`${formatDate(note.createdAt)}\``);
 
   if (note.tags && note.tags.length > 0) {
-    parts.push(note.tags.map(t => `\`#${t}\``).join(" "));
+    parts.push(note.tags.map((t) => `\`#${t}\``).join(" "));
   }
 
   markdown += parts.join("  ");
@@ -109,7 +109,11 @@ export default function RandomNote() {
         markdown={`# ❌ Error\n\n${error}`}
         actions={
           <ActionPanel>
-            <Action title="Retry" icon={Icon.ArrowClockwise} onAction={fetchRandomNote} />
+            <Action
+              title="Retry"
+              icon={Icon.ArrowClockwise}
+              onAction={fetchRandomNote}
+            />
           </ActionPanel>
         }
       />
@@ -122,7 +126,11 @@ export default function RandomNote() {
         markdown={`# 📭 No Notes\n\nGo write something!`}
         actions={
           <ActionPanel>
-            <Action title="Retry" icon={Icon.ArrowClockwise} onAction={fetchRandomNote} />
+            <Action
+              title="Retry"
+              icon={Icon.ArrowClockwise}
+              onAction={fetchRandomNote}
+            />
           </ActionPanel>
         }
       />
@@ -140,7 +148,12 @@ export default function RandomNote() {
       actions={
         <ActionPanel>
           <ActionPanel.Section>
-            <Action title="Another Random Note" icon={Icon.Shuffle} shortcut={{ modifiers: ["cmd"], key: "r" }} onAction={fetchRandomNote} />
+            <Action
+              title="Another Random Note"
+              icon={Icon.Shuffle}
+              shortcut={{ modifiers: ["cmd"], key: "r" }}
+              onAction={fetchRandomNote}
+            />
             {webUrl && (
               <Action.OpenInBrowser
                 title="Open in Browser"
@@ -150,8 +163,16 @@ export default function RandomNote() {
             )}
           </ActionPanel.Section>
           <ActionPanel.Section>
-            <Action.CopyToClipboard title="Copy Content" content={note.content} shortcut={{ modifiers: ["cmd"], key: "c" }} />
-            <Action.Paste title="Paste Content" content={note.content} shortcut={{ modifiers: ["cmd", "shift"], key: "v" }} />
+            <Action.CopyToClipboard
+              title="Copy Content"
+              content={note.content}
+              shortcut={{ modifiers: ["cmd"], key: "c" }}
+            />
+            <Action.Paste
+              title="Paste Content"
+              content={note.content}
+              shortcut={{ modifiers: ["cmd", "shift"], key: "v" }}
+            />
             {webUrl && (
               <Action.CopyToClipboard
                 title="Copy Link"

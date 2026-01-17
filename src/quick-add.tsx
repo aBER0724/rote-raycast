@@ -1,4 +1,12 @@
-import { Clipboard, showHUD, getSelectedText, showToast, Toast, getPreferenceValues, LocalStorage } from "@raycast/api";
+import {
+  Clipboard,
+  showHUD,
+  getSelectedText,
+  showToast,
+  Toast,
+  getPreferenceValues,
+  LocalStorage,
+} from "@raycast/api";
 import { getApiClient } from "./api";
 import { RotePreferences } from "./types";
 
@@ -64,7 +72,10 @@ export default async function QuickAdd() {
     if (!tags) {
       const tagSetting = preferences.quickAddTag?.trim();
       if (tagSetting) {
-        tags = tagSetting.split(/[,\s]+/).map(t => t.trim()).filter(t => t.length > 0);
+        tags = tagSetting
+          .split(/[,\s]+/)
+          .map((t) => t.trim())
+          .filter((t) => t.length > 0);
       }
     }
 

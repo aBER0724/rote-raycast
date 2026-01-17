@@ -111,8 +111,8 @@ function generateDetailMarkdown(note: Note): string {
 
   // Then show attachments/images
   if (note.attachments && note.attachments.length > 0) {
-    const images = note.attachments.filter(
-      (a) => a.details?.mimetype?.startsWith("image/")
+    const images = note.attachments.filter((a) =>
+      a.details?.mimetype?.startsWith("image/"),
     );
     if (images.length > 0) {
       for (const attachment of images) {
@@ -184,7 +184,16 @@ function NoteDetailMetadata({ note }: { note: Note }) {
   );
 }
 
-type FilterType = "all" | "today" | "yesterday" | "week" | "month" | "public" | "private" | "pinned" | string;
+type FilterType =
+  | "all"
+  | "today"
+  | "yesterday"
+  | "week"
+  | "month"
+  | "public"
+  | "private"
+  | "pinned"
+  | string;
 
 export default function ListNotes() {
   const [notes, setNotes] = useState<Note[]>([]);
@@ -207,12 +216,18 @@ export default function ListNotes() {
   const filteredNotes = useMemo(() => {
     let filtered = notes;
 
-    if (filter === "today") filtered = notes.filter((n) => isToday(n.createdAt));
-    else if (filter === "yesterday") filtered = notes.filter((n) => isYesterday(n.createdAt));
-    else if (filter === "week") filtered = notes.filter((n) => isWithinDays(n.createdAt, 7));
-    else if (filter === "month") filtered = notes.filter((n) => isWithinDays(n.createdAt, 30));
-    else if (filter === "public") filtered = notes.filter((n) => n.state === "public");
-    else if (filter === "private") filtered = notes.filter((n) => n.state === "private");
+    if (filter === "today")
+      filtered = notes.filter((n) => isToday(n.createdAt));
+    else if (filter === "yesterday")
+      filtered = notes.filter((n) => isYesterday(n.createdAt));
+    else if (filter === "week")
+      filtered = notes.filter((n) => isWithinDays(n.createdAt, 7));
+    else if (filter === "month")
+      filtered = notes.filter((n) => isWithinDays(n.createdAt, 30));
+    else if (filter === "public")
+      filtered = notes.filter((n) => n.state === "public");
+    else if (filter === "private")
+      filtered = notes.filter((n) => n.state === "private");
     else if (filter === "pinned") filtered = notes.filter((n) => n.pin);
     else if (filter.startsWith("tag:")) {
       const tag = filter.slice(4);
@@ -267,15 +282,43 @@ export default function ListNotes() {
       searchBarAccessory={
         <List.Dropdown tooltip="Filter" storeValue onChange={setFilter}>
           <List.Dropdown.Section title="Time">
-            <List.Dropdown.Item title="All Notes" value="all" icon={Icon.List} />
-            <List.Dropdown.Item title="Today" value="today" icon={Icon.Calendar} />
-            <List.Dropdown.Item title="Yesterday" value="yesterday" icon={Icon.Calendar} />
-            <List.Dropdown.Item title="Last 7 Days" value="week" icon={Icon.Calendar} />
-            <List.Dropdown.Item title="Last 30 Days" value="month" icon={Icon.Calendar} />
+            <List.Dropdown.Item
+              title="All Notes"
+              value="all"
+              icon={Icon.List}
+            />
+            <List.Dropdown.Item
+              title="Today"
+              value="today"
+              icon={Icon.Calendar}
+            />
+            <List.Dropdown.Item
+              title="Yesterday"
+              value="yesterday"
+              icon={Icon.Calendar}
+            />
+            <List.Dropdown.Item
+              title="Last 7 Days"
+              value="week"
+              icon={Icon.Calendar}
+            />
+            <List.Dropdown.Item
+              title="Last 30 Days"
+              value="month"
+              icon={Icon.Calendar}
+            />
           </List.Dropdown.Section>
           <List.Dropdown.Section title="Status">
-            <List.Dropdown.Item title="Public" value="public" icon={Icon.Globe} />
-            <List.Dropdown.Item title="Private" value="private" icon={Icon.LockDisabled} />
+            <List.Dropdown.Item
+              title="Public"
+              value="public"
+              icon={Icon.Globe}
+            />
+            <List.Dropdown.Item
+              title="Private"
+              value="private"
+              icon={Icon.LockDisabled}
+            />
             <List.Dropdown.Item title="Pinned" value="pinned" icon={Icon.Pin} />
           </List.Dropdown.Section>
           {allTags.length > 0 && (
@@ -297,12 +340,18 @@ export default function ListNotes() {
         <List.EmptyView
           icon={Icon.Document}
           title="No notes found"
-          description={filter === "all" ? "Create your first note" : "No notes match this filter"}
+          description={
+            filter === "all"
+              ? "Create your first note"
+              : "No notes match this filter"
+          }
         />
       ) : (
         filteredNotes.map((note) => {
           const stateInfo = getStateIcon(note.state);
-          const displayTitle = note.pin ? `📌 ${truncateContent(note.content)}` : truncateContent(note.content);
+          const displayTitle = note.pin
+            ? `📌 ${truncateContent(note.content)}`
+            : truncateContent(note.content);
           return (
             <List.Item
               key={note.id}
@@ -314,7 +363,9 @@ export default function ListNotes() {
                   : [
                       { icon: stateInfo.icon, tooltip: note.state },
                       { text: formatDate(note.createdAt) },
-                      ...(note.pin ? [{ icon: Icon.Pin, tooltip: "Pinned" }] : []),
+                      ...(note.pin
+                        ? [{ icon: Icon.Pin, tooltip: "Pinned" }]
+                        : []),
                     ]
               }
               detail={
@@ -343,7 +394,9 @@ export default function ListNotes() {
                     <Action.Push
                       title="Edit Note"
                       icon={Icon.Pencil}
-                      target={<EditNote note={note} onNoteUpdated={fetchNotes} />}
+                      target={
+                        <EditNote note={note} onNoteUpdated={fetchNotes} />
+                      }
                       shortcut={{ modifiers: ["cmd"], key: "e" }}
                     />
                     <Action
@@ -362,7 +415,10 @@ export default function ListNotes() {
                           await showToast({
                             style: Toast.Style.Failure,
                             title: "Failed to toggle pin",
-                            message: error instanceof Error ? error.message : "Unknown error",
+                            message:
+                              error instanceof Error
+                                ? error.message
+                                : "Unknown error",
                           });
                         }
                       }}
@@ -377,14 +433,19 @@ export default function ListNotes() {
                           await api.toggleArchive(note.id, !note.archived);
                           await showToast({
                             style: Toast.Style.Success,
-                            title: note.archived ? "Note unarchived" : "Note archived",
+                            title: note.archived
+                              ? "Note unarchived"
+                              : "Note archived",
                           });
                           await fetchNotes();
                         } catch (error) {
                           await showToast({
                             style: Toast.Style.Failure,
                             title: "Failed to toggle archive",
-                            message: error instanceof Error ? error.message : "Unknown error",
+                            message:
+                              error instanceof Error
+                                ? error.message
+                                : "Unknown error",
                           });
                         }
                       }}
@@ -397,7 +458,8 @@ export default function ListNotes() {
                       onAction={async () => {
                         const confirmed = await confirmAlert({
                           title: "Delete Note",
-                          message: "Are you sure you want to delete this note? This action cannot be undone.",
+                          message:
+                            "Are you sure you want to delete this note? This action cannot be undone.",
                           primaryAction: {
                             title: "Delete",
                             style: Alert.ActionStyle.Destructive,
@@ -417,7 +479,10 @@ export default function ListNotes() {
                             await showToast({
                               style: Toast.Style.Failure,
                               title: "Failed to delete note",
-                              message: error instanceof Error ? error.message : "Unknown error",
+                              message:
+                                error instanceof Error
+                                  ? error.message
+                                  : "Unknown error",
                             });
                           }
                         }

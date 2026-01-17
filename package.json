@@ -1,11 +1,21 @@
 {
   "name": "rote",
+  "version": "1.0.0",
   "title": "Rote",
   "description": "Quick access to your Rote notes - create, search, and manage your fleeting thoughts",
   "icon": "extension-icon.png",
-  "author": "aber",
+  "author": "aber_yan",
   "categories": ["Productivity", "Applications"],
   "license": "MIT",
+  "keywords": [
+    "rote",
+    "notes",
+    "note-taking",
+    "productivity",
+    "fleeting-thoughts",
+    "quick-notes",
+    "markdown"
+  ],
   "commands": [
     {
       "name": "search-notes",

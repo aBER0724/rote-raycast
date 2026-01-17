@@ -81,11 +81,10 @@ function generateDetailMarkdown(note: Note): string {
 
   // Then show attachments/images
   if (note.attachments && note.attachments.length > 0) {
-    const images = note.attachments.filter(
-      (a) => a.details?.mimetype?.startsWith("image/")
+    const images = note.attachments.filter((a) =>
+      a.details?.mimetype?.startsWith("image/"),
     );
     if (images.length > 0) {
-      
       for (const attachment of images) {
         const imageUrl = attachment.compressUrl || attachment.url;
         if (imageUrl) {

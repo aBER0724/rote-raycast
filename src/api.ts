@@ -1,4 +1,9 @@
-import { getPreferenceValues, showToast, Toast, LocalStorage } from "@raycast/api";
+import {
+  getPreferenceValues,
+  showToast,
+  Toast,
+  LocalStorage,
+} from "@raycast/api";
 import {
   RotePreferences,
   ApiResponse,
@@ -26,7 +31,8 @@ class RoteApiClient {
 
   constructor() {
     const preferences = getPreferenceValues<RotePreferences>();
-    this.baseUrl = preferences.apiEndpoint.replace(/\/$/, "").trim() + "/v2/api";
+    this.baseUrl =
+      preferences.apiEndpoint.replace(/\/$/, "").trim() + "/v2/api";
     this.username = (preferences.username || "").trim();
     this.password = preferences.password || "";
   }
@@ -74,7 +80,7 @@ class RoteApiClient {
     const requestBody = JSON.stringify(
       isEmailLogin
         ? { email: this.username, password: this.password }
-        : { username: this.username, password: this.password }
+        : { username: this.username, password: this.password },
     );
     console.log("Login type:", isEmailLogin ? "email" : "username");
     console.log("Request body:", requestBody);
@@ -83,14 +89,17 @@ class RoteApiClient {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Accept": "application/json",
+        Accept: "application/json",
       },
       body: requestBody,
     });
 
     const text = await response.text();
     console.log("Response status:", response.status);
-    console.log("Response headers:", JSON.stringify(Object.fromEntries(response.headers.entries())));
+    console.log(
+      "Response headers:",
+      JSON.stringify(Object.fromEntries(response.headers.entries())),
+    );
     console.log("Response body (first 300 chars):", text.substring(0, 300));
     console.log("=== END DEBUG ===");
 
@@ -175,7 +184,10 @@ class RoteApiClient {
     }
 
     // 检查 token 是否即将过期
-    if (this.tokens && this.tokens.expiresAt - Date.now() < TOKEN_EXPIRY_BUFFER) {
+    if (
+      this.tokens &&
+      this.tokens.expiresAt - Date.now() < TOKEN_EXPIRY_BUFFER
+    ) {
       // 尝试刷新
       const refreshed = await this.refreshTokens();
       if (!refreshed) {
@@ -205,10 +217,14 @@ class RoteApiClient {
   private async request<T>(
     endpoint: string,
     options: RequestInit = {},
-    requireAuth: boolean = true
+    requireAuth: boolean = true,
   ): Promise<T> {
     const url = `${this.baseUrl}${endpoint}`;
-    console.log("API Request:", options.method || "GET", url.replace(/\?.*/, "?..."));
+    console.log(
+      "API Request:",
+      options.method || "GET",
+      url.replace(/\?.*/, "?..."),
+    );
 
     const headers: Record<string, string> = {
       "Content-Type": "application/json",
@@ -243,7 +259,9 @@ class RoteApiClient {
         const retryText = await retryResponse.text();
 
         if (!retryResponse.ok) {
-          throw new Error(`HTTP ${retryResponse.status}: ${retryText.substring(0, 100)}`);
+          throw new Error(
+            `HTTP ${retryResponse.status}: ${retryText.substring(0, 100)}`,
+          );
         }
 
         const retryData = JSON.parse(retryText) as ApiResponse<T>;
@@ -254,7 +272,9 @@ class RoteApiClient {
       }
 
       if (!response.ok) {
-        throw new Error(`HTTP ${response.status}: ${responseText.substring(0, 100)}`);
+        throw new Error(
+          `HTTP ${response.status}: ${responseText.substring(0, 100)}`,
+        );
       }
 
       const data = JSON.parse(responseText) as ApiResponse<T>;
@@ -282,9 +302,12 @@ class RoteApiClient {
   // 获取笔记列表
   async getNotes(params: ListParams = {}): Promise<Note[]> {
     const searchParams = new URLSearchParams();
-    if (params.skip !== undefined) searchParams.append("skip", String(params.skip));
-    if (params.limit !== undefined) searchParams.append("limit", String(params.limit));
-    if (params.archived !== undefined) searchParams.append("archived", String(params.archived));
+    if (params.skip !== undefined)
+      searchParams.append("skip", String(params.skip));
+    if (params.limit !== undefined)
+      searchParams.append("limit", String(params.limit));
+    if (params.archived !== undefined)
+      searchParams.append("archived", String(params.archived));
     if (params.tag) searchParams.append("tag", params.tag);
 
     const query = searchParams.toString();
@@ -297,8 +320,10 @@ class RoteApiClient {
   async searchNotes(params: SearchParams): Promise<Note[]> {
     const searchParams = new URLSearchParams();
     searchParams.append("keyword", params.keyword);
-    if (params.skip !== undefined) searchParams.append("skip", String(params.skip));
-    if (params.limit !== undefined) searchParams.append("limit", String(params.limit));
+    if (params.skip !== undefined)
+      searchParams.append("skip", String(params.skip));
+    if (params.limit !== undefined)
+      searchParams.append("limit", String(params.limit));
 
     return this.request<Note[]>(`/notes/search?${searchParams.toString()}`);
   }
